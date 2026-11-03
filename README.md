@@ -150,3 +150,13 @@ Status     : Always Learning
 <img src="https://capsule-render.vercel.app/api?type=waving&color=0:000000,50:003300,100:00FF41&height=120&section=footer"/>
 
 </div>
+<div align="center">
+
+<img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif" width="500"/>
+
+</div>
+<div align="center">
+
+<img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="450"/>
+
+</div>
