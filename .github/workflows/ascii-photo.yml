@@ -1,113 +1,94 @@
-name: Generate Animated ASCII Profile
 
-on:
-  workflow_dispatch:
-  push:
-    paths:
-      - ".github/workflows/ascii-profile.yml"
+<div align="center">
 
-permissions:
-  contents: write
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:020812,100:003B55&height=170&section=header&text=Kaveesha%20Sithum%20Nimsara&fontSize=32&fontColor=00D9FF&animation=fadeIn&fontAlignY=35&desc=Aspiring%20Software%20Developer&descSize=20&descAlignY=65" width="100%"/>
 
-jobs:
-  generate:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=Hi%2C+I'm+Kaveesha+Sithum;Java+%26+SQL+Learner;Aspiring+Software+Developer;Dream+%E2%80%A2+Code+%E2%80%A2+Build"/>
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
+</div>
 
-      - name: Install dependencies
-        run: pip install pillow requests
+---
 
-      - name: Generate ASCII portrait SVG
-        env:
-          GH_USER: ${{ github.repository_owner }}
-        run: |
-          python - <<'PY'
-          import os
-          import requests
-          from PIL import Image, ImageOps, ImageEnhance
-          from io import BytesIO
-          from html import escape
+## 👨‍💻 About Me
 
-          user = os.environ["GH_USER"].strip()
-          headers = {"User-Agent": "GitHub-ASCII-Profile-Generator"}
+- 🎓 IT Student at ICET
+- ☕ Java & SQL Learner
+- 🚀 Passionate about Software Development
+- 🌱 Always Learning & Building
 
-          api_response = requests.get(
-              f"https://api.github.com/users/{user}",
-              headers=headers,
-              timeout=30
-          )
-          api_response.raise_for_status()
-          avatar_url = api_response.json()["avatar_url"]
+---
 
-          avatar_response = requests.get(avatar_url, headers=headers, timeout=30)
-          avatar_response.raise_for_status()
+## 🧰 Technologies & Skills
 
-          image = Image.open(BytesIO(avatar_response.content)).convert("RGB")
-          image = ImageOps.fit(image, (100, 48))
-          image = ImageEnhance.Contrast(image).enhance(1.35)
-          gray = image.convert("L")
+<div align="center">
 
-          chars = "@%#*+=-:. "
-          palette = ["#003B55", "#006080", "#008EAA", "#00B8D9", "#00D9FF"]
+<img src="https://skillicons.dev/icons?i=java,html,css,js,mysql" height="50"/>
 
-          svg = [
-              '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">',
-              '<defs>',
-              '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">',
-              '<stop offset="0%" stop-color="#02060b"/><stop offset="100%" stop-color="#071927"/>',
-              '</linearGradient>',
-              '<filter id="glow"><feGaussianBlur stdDeviation="2.5" result="blur"/>',
-              '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>',
-              '<style>',
-              '.matrix{font-family:monospace;font-size:13px;fill:#00d9ff;opacity:.15}',
-              '.ascii{font-family:monospace;font-size:15px;letter-spacing:1px;filter:url(#glow)}',
-              '.scan{animation:scan 5s linear infinite;opacity:.2}',
-              '@keyframes scan{0%{transform:translateY(-800px)}100%{transform:translateY(900px)}}',
-              '.pulse{animation:pulse 2.4s ease-in-out infinite alternate}',
-              '@keyframes pulse{from{opacity:.7}to{opacity:1}}',
-              '</style></defs>',
-              '<rect width="1200" height="900" fill="url(#bg)"/>',
-              '<rect x="22" y="22" width="1156" height="856" rx="24" fill="none" stroke="#00d9ff" stroke-width="2" opacity=".65"/>'
-          ]
+</div>
 
-          for x in range(30, 1180, 35):
-              text = "".join(chars[(x + i * 7) % len(chars)] for i in range(42))
-              svg.append(f'<text class="matrix" x="{x}" y="50">{escape(text)}</text>')
+---
 
-          for y in range(48):
-              spans = []
-              for x in range(100):
-                  brightness = gray.getpixel((x, y))
-                  idx = int(brightness * (len(chars) - 1) / 255)
-                  color = palette[min(idx // 2, 4)]
-                  spans.append(f'<tspan fill="{color}">{escape(chars[idx])}</tspan>')
-              svg.append(
-                  f'<text class="ascii pulse" xml:space="preserve" x="230" y="{170 + y*15}">'
-                  + "".join(spans) + '</text>'
-              )
+## 📊 GitHub Stats
 
-          svg += [
-              '<rect class="scan" x="30" y="80" width="1140" height="3" fill="#00e5ff"/>',
-              '<text x="600" y="830" text-anchor="middle" fill="#00e5ff" font-family="monospace" font-size="25" letter-spacing="5">KAVEESITHUM // ASCII PROFILE</text>',
-              '</svg>'
-          ]
+<div align="center">
 
-          with open("profile-ascii.svg", "w", encoding="utf-8") as f:
-              f.write("\\n".join(svg))
-          print(f"Generated profile-ascii.svg for @{user}")
-          PY
+<img src="https://github-readme-stats.vercel.app/api?username=kaveesithum&show_icons=true&theme=tokyonight&bg_color=050B12&title_color=00D9FF&icon_color=00D9FF&hide_border=true" height="160"/>
 
-      - name: Commit generated SVG
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile-ascii.svg
-          git commit -m "Update animated ASCII profile" || exit 0
-          git push
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveesithum&layout=compact&theme=tokyonight&bg_color=050B12&title_color=00D9FF&hide_border=true" height="160"/>
+
+<img src="https://streak-stats.demolab.com?user=kaveesithum&theme=tokyonight&background=050B12&ring=00D9FF&fire=00D9FF&hide_border=true"/>
+
+</div>
+
+---
+
+## 🐍 Contribution Snake
+
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/kaveesithum/kaveesithum/output/snake.svg" width="100%"/>
+
+</div>
+
+---
+
+## 👾 Pacman Contributions
+
+<div align="center">
+
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/kaveesithum/kaveesithum/output/pacman-contribution-graph-dark.svg?game=pacman"/>
+<img src="https://raw.githubusercontent.com/kaveesithum/kaveesithum/output/pacman-contribution-graph.svg?game=pacman" width="100%"/>
+</picture>
+
+</div>
+
+---
+
+## 🌐 Connect With Me
+
+<div align="center">
+
+<a href="https://github.com/kaveesithum">
+<img src="https://img.shields.io/badge/GITHUB-KAVEESITHUM-00D9FF?style=for-the-badge&logo=github&logoColor=black"/>
+</a>
+
+<a href="https://www.linkedin.com/in/kaveesha-sithum-nimsara-weththasinhe-83aa96414/">
+<img src="https://img.shields.io/badge/LINKEDIN-CONNECT-00D9FF?style=for-the-badge&logo=linkedin&logoColor=black"/>
+</a>
+
+<a href="mailto:kaveesithum200604@gmail.com">
+<img src="https://img.shields.io/badge/EMAIL-CONTACT-00D9FF?style=for-the-badge&logo=gmail&logoColor=black"/>
+</a>
+
+</div>
+
+<div align="center">
+
+### ✨ Dream • Code • Build ✨
+
+<img src="https://komarev.com/ghpvc/?username=kaveesithum&label=PROFILE+VIEWS&color=00D9FF&style=for-the-badge"/>
+
+**Thanks for Visiting My Profile!**
+
+</div>
