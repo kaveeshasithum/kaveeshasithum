@@ -1,0 +1,96 @@
+name: Generate ASCII Profile Photo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Pillow
+        run: pip install pillow requests
+
+      - name: Generate ASCII Photo
+        env:
+          GH_USER: kaveeshasithum
+        run: |
+          python - <<'PY'
+          import requests
+          from PIL import Image, ImageOps
+          from io import BytesIO
+          from html import escape
+
+          user = "kaveeshasithum"
+
+          data = requests.get(
+              f"https://api.github.com/users/{user}"
+          ).json()
+
+          avatar = requests.get(data["avatar_url"]).content
+
+          img = Image.open(BytesIO(avatar)).convert("RGB")
+          img = ImageOps.fit(img, (100, 50))
+
+          pixels = img.convert("L")
+
+          chars = "@%#*+=-:. "
+          colors = [
+              "#003B55",
+              "#006080",
+              "#008EAA",
+              "#00B8D9",
+              "#00D9FF"
+          ]
+
+          svg = [
+              '<svg xmlns="http://www.w3.org/2000/svg" '
+              'width="1100" height="900" viewBox="0 0 1100 900">',
+              '<rect width="100%" height="100%" fill="#050B12"/>'
+          ]
+
+          for y in range(50):
+              line = []
+
+              for x in range(100):
+                  brightness = pixels.getpixel((x, y))
+                  index = int(brightness * (len(chars)-1) / 255)
+
+                  char = escape(chars[index])
+                  color = colors[min(index // 2, 4)]
+
+                  line.append(
+                      f'<tspan fill="{color}">{char}</tspan>'
+                  )
+
+              svg.append(
+                  f'<text xml:space="preserve" x="10" '
+                  f'y="{25+y*17}" font-family="monospace" '
+                  f'font-size="16" letter-spacing="1">'
+                  + ''.join(line) + '</text>'
+              )
+
+          svg.append('</svg>')
+
+          with open("profile-ascii.svg", "w") as f:
+              f.write("\n".join(svg))
+          PY
+
+      - name: Commit ASCII Image
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add profile-ascii.svg
+          git commit -m "Generate ASCII profile portrait" || exit 0
+          git push
