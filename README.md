@@ -1,14 +1,26 @@
- <div align="center">
 
-<img src="https://raw.githubusercontent.com/kaveeshasithum/kaveeshasithum/main/profile-ascii.svg" width="100%" alt="ASCII Profile"/>
+<!-- ===================================== -->
+<!-- KAVEESHA SITHUM - GITHUB PROFILE README -->
+<!-- ===================================== -->
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=24&pause=1000&color=00D9FF&center=true&vCenter=true&width=800&lines=Hi%2C+I'm+Kaveesha+Sithum;Aspiring+Software+Developer;Java+%26+Web+Developer;Dream+%E2%80%A2+Code+%E2%80%A2+Build" alt="Typing SVG"/>
+<div align="center">
 
-# 👋 Hi, I'm Kaveesha Sithum
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=HELLO+WORLD!;I'M+KAVEESHA+SITHUM;JAVA+DEVELOPER;SOFTWARE+DEVELOPMENT+ENTHUSIAST" alt="Typing SVG" />
 
-### ⚡ Aspiring Software Developer
+<br/>
 
-[![GitHub](https://img.shields.io/badge/GitHub-kaveeshasithum-00D9FF?style=for-the-badge&logo=github&logoColor=black)](https://github.com/kaveeshasithum)
+<img src="./profile-photo.gif" width="220" alt="Animated Profile Photo"/>
+
+<br/>
+
+<img src="./profile-ascii.svg" width="100%" alt="ASCII Cyberpunk Profile"/>
+
+<br/>
+
+### `> SOFTWARE DEVELOPER | JAVA PROGRAMMER`
+
+<img src="https://img.shields.io/badge/STATUS-LEARNING%20AND%20BUILDING-00D9FF?style=for-the-badge&labelColor=02060B"/>
+<img src="https://img.shields.io/badge/FOCUS-SOFTWARE%20DEVELOPMENT-00D9FF?style=for-the-badge&labelColor=02060B"/>
 
 </div>
 
@@ -16,57 +28,67 @@
 
 ## 👨‍💻 About Me
 
-- 🎓 IT Student at **ICET**
-- 🏫 Seethawaka Central College
-- ☕ Java & SQL Learner
-- 🌐 Interested in Web Development
-- 🚀 Passionate about Software Development
-- 🌱 Always Learning & Building
-- 💡 Dream • Code • Build
+```java
+public class Kaveesha {
+
+    String name = "Kaveesha Sithum Nimsara Weththasinhe";
+    int age = 21;
+    String school = "Seethawaka Central College";
+    String institute = "ICET";
+
+    String mainLanguage = "Java";
+
+    String[] skills = {
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "SQL"
+    };
+
+    String goal = "Become a Professional Software Developer";
+
+    public void introduce() {
+        System.out.println("Hello World!");
+        System.out.println("Welcome to my GitHub Profile!");
+    }
+}
+```
+
+- 🎓 Studying at **ICET**
+- 💻 Interested in Software Development
+- ☕ Learning and developing with Java
+- 🚀 Building my programming skills
+- 🎯 Goal: Become a Professional Software Developer
 
 ---
 
-## 🧰 Technologies & Skills
+## 🛠️ My Skills
 
 <div align="center">
 
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="55" alt="Java"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="55" alt="HTML5"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="55" alt="CSS3"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="55" alt="JavaScript"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="55" alt="MySQL"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" height="55" alt="Bootstrap"/>
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" height="55" alt="GitHub"/>
+### Programming Languages
+
+<img src="https://skillicons.dev/icons?i=java,html,css,js,sql&theme=dark" />
+
+### Tools & Technologies
+
+<img src="https://skillicons.dev/icons?i=git,github,vscode,idea,mysql&theme=dark" />
 
 </div>
 
 ---
 
-## 💻 My Programming Languages
+## 📊 GitHub Statistics
 
 <div align="center">
 
-![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+<img width="49%" src="https://github-readme-stats.vercel.app/api?username=kaveesithum&show_icons=true&theme=tokyonight&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=02060B" />
 
-</div>
-
----
-
-## 📊 GitHub Stats
-
-<div align="center">
-
-<img height="180" src="https://github-readme-stats.vercel.app/api?username=kaveeshasithum&show_icons=true&theme=tokyonight&hide_border=true&bg_color=020617&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF" alt="GitHub Stats"/>
-
-<img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveeshasithum&layout=compact&theme=tokyonight&hide_border=true&bg_color=020617&title_color=00D9FF&text_color=FFFFFF" alt="Top Languages"/>
+<img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveesithum&layout=compact&theme=tokyonight&hide_border=true&title_color=00D9FF&text_color=FFFFFF&bg_color=02060B" />
 
 <br/>
 
-<img src="https://streak-stats.demolab.com?user=kaveeshasithum&theme=tokyonight&hide_border=true&background=020617&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF" width="90%" alt="GitHub Streak"/>
+<img width="70%" src="https://streak-stats.demolab.com?user=kaveesithum&theme=tokyonight&hide_border=true&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&background=02060B" />
 
 </div>
 
@@ -76,36 +98,47 @@
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/kaveeshasithum/kaveeshasithum/output/snake.svg" width="100%" alt="Contribution Snake"/>
+<img src="https://raw.githubusercontent.com/kaveesithum/kaveesithum/output/github-contribution-grid-snake-dark.svg" width="100%" alt="Contribution Snake"/>
 
 </div>
 
 ---
 
-## 🎯 Current Goals
-
-- [ ] Improve Java Programming Skills
-- [ ] Learn Advanced SQL
-- [ ] Build Java Projects
-- [ ] Improve Web Development Skills
-- [ ] Create More GitHub Projects
-
----
-
-## 🌐 Connect With Me
+## 🚀 My Projects
 
 <div align="center">
 
-<a href="https://github.com/kaveeshasithum">
-<img src="https://img.shields.io/badge/GitHub-Follow-00D9FF?style=for-the-badge&logo=github&logoColor=black" alt="GitHub"/>
+<a href="https://github.com/kaveesithum?tab=repositories">
+  <img src="https://img.shields.io/badge/Explore-My%20Repositories-00D9FF?style=for-the-badge&logo=github&logoColor=black"/>
+</a>
+
+</div>
+
+---
+
+## 🎓 Education
+
+| Institution | Details |
+|---|---|
+| School | Seethawaka Central College |
+| Institute | ICET |
+
+---
+
+## 📫 Connect With Me
+
+<div align="center">
+
+<a href="mailto:kaveesithum200604@gmail.com">
+  <img src="https://img.shields.io/badge/Email-00D9FF?style=for-the-badge&logo=gmail&logoColor=black"/>
+</a>
+
+<a href="https://github.com/kaveesithum">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
 
 <a href="https://www.linkedin.com/in/kaveesha-sithum-nimsara-weththasinhe-83aa96414/">
-<img src="https://img.shields.io/badge/LinkedIn-Connect-00D9FF?style=for-the-badge&logo=linkedin&logoColor=black" alt="LinkedIn"/>
-</a>
-
-<a href="mailto:kaveeshasithum200604@gmail.com">
-<img src="https://img.shields.io/badge/Email-Contact-00D9FF?style=for-the-badge&logo=gmail&logoColor=black" alt="Email"/>
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
 </a>
 
 </div>
@@ -114,13 +147,12 @@
 
 <div align="center">
 
-### ✨ DREAM • CODE • BUILD ✨
+### ⚡ "CODE. CREATE. INNOVATE. REPEAT."
 
-**Thanks for Visiting My Profile!** 💙
+<img src="https://komarev.com/ghpvc/?username=kaveesithum&label=PROFILE%20VIEWS&color=00D9FF&style=for-the-badge" />
 
-<img src="https://komarev.com/ghpvc/?username=kaveeshasithum&label=PROFILE+VIEWS&color=00D9FF&style=for-the-badge" alt="Profile Views"/>
+<br/><br/>
+
+**Thanks for visiting my profile! 💙**
 
 </div>
-          def ImageChops_multiply(a, b):
-              from PIL import ImageChops
-              return ImageChops.multiply(a, b)
