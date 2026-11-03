@@ -1,3 +1,4 @@
+
 name: Generate Animated ASCII Profile
 
 on:
@@ -25,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: pip install pillow requests
 
-      - name: Generate Animated ASCII Profile
+      - name: Generate ASCII Profile
         env:
           GH_USER: ${{ github.repository_owner }}
         run: |
@@ -37,12 +38,11 @@ jobs:
           from html import escape
 
           user = os.environ["GH_USER"].strip()
-          headers = {"User-Agent": "GitHub-ASCII-Profile"}
 
           # Get GitHub avatar
           response = requests.get(
               f"https://api.github.com/users/{user}",
-              headers=headers,
+              headers={"User-Agent": "GitHub-ASCII-Profile"},
               timeout=30
           )
           response.raise_for_status()
@@ -51,7 +51,6 @@ jobs:
 
           avatar_response = requests.get(
               avatar_url,
-              headers=headers,
               timeout=30
           )
           avatar_response.raise_for_status()
@@ -62,12 +61,10 @@ jobs:
           ).convert("RGB")
 
           image = ImageOps.fit(image, (100, 48))
-          image = ImageEnhance.Contrast(image).enhance(1.5)
-
+          image = ImageEnhance.Contrast(image).enhance(1.35)
           gray = image.convert("L")
 
           chars = "@%#*+=-:. "
-
           palette = [
               "#003B55",
               "#006080",
@@ -78,14 +75,11 @@ jobs:
 
           svg = [
               '<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">',
-
               '<defs>',
-
               '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">',
               '<stop offset="0%" stop-color="#02060b"/>',
               '<stop offset="100%" stop-color="#071927"/>',
               '</linearGradient>',
-
               '<filter id="glow">',
               '<feGaussianBlur stdDeviation="2.5" result="blur"/>',
               '<feMerge>',
@@ -93,58 +87,24 @@ jobs:
               '<feMergeNode in="SourceGraphic"/>',
               '</feMerge>',
               '</filter>',
-
               '<style>',
-
               '.matrix{font-family:monospace;font-size:13px;fill:#00d9ff;opacity:.15}',
-
               '.ascii{font-family:monospace;font-size:15px;letter-spacing:1px;filter:url(#glow)}',
-
+              '.pulse{animation:pulse 2.4s ease-in-out infinite alternate}',
+              '@keyframes pulse{from{opacity:.65}to{opacity:1}}',
               '.scan{animation:scan 5s linear infinite;opacity:.3}',
-
-              '@keyframes scan{',
-              '0%{transform:translateY(-800px)}',
-              '100%{transform:translateY(900px)}',
-              '}',
-
-              '.pulse{animation:pulse 2s ease-in-out infinite alternate}',
-
-              '@keyframes pulse{',
-              'from{opacity:.55}',
-              'to{opacity:1}',
-              '}',
-
-              '.glitch{animation:glitch 4s infinite steps(1)}',
-
-              '@keyframes glitch{',
-              '0%,90%,100%{transform:translateX(0)}',
-              '91%{transform:translateX(-5px)}',
-              '92%{transform:translateX(5px)}',
-              '93%{transform:translateX(-3px)}',
-              '94%{transform:translateX(0)}',
-              '}',
-
-              '.rgb{animation:rgb 2s infinite alternate}',
-
-              '@keyframes rgb{',
-              'from{opacity:.15}',
-              'to{opacity:.8}',
-              '}',
-
+              '@keyframes scan{0%{transform:translateY(-800px)}100%{transform:translateY(900px)}}',
+              '.glitch{animation:glitch 3s infinite}',
+              '@keyframes glitch{0%,90%,100%{transform:translateX(0)}92%{transform:translateX(3px)}94%{transform:translateX(-3px)}}',
               '</style>',
               '</defs>',
 
-              # Background
               '<rect width="1200" height="900" fill="url(#bg)"/>',
 
-              # Border
-              '<rect x="22" y="22" width="1156" height="856" rx="24" fill="none" stroke="#00d9ff" stroke-width="2" opacity=".65"/>',
-
-              # Decorative neon lines
-              '<path d="M40 100 H1160 M40 790 H1160" stroke="#00d9ff" opacity=".3"/>'
+              '<rect x="22" y="22" width="1156" height="856" rx="24" fill="none" stroke="#00d9ff" stroke-width="2" opacity=".65"/>'
           ]
 
-          # Matrix background
+          # Background matrix
           for x in range(30, 1180, 35):
               text = "".join(
                   chars[(x + i * 7) % len(chars)]
@@ -157,11 +117,9 @@ jobs:
 
           # ASCII portrait
           for y in range(48):
-
               spans = []
 
               for x in range(100):
-
                   brightness = gray.getpixel((x, y))
 
                   idx = int(
@@ -180,37 +138,25 @@ jobs:
                   + '</text>'
               )
 
-          # RGB glitch overlay
-          svg.append(
-              '<rect class="rgb" x="40" y="120" width="1120" height="2" fill="#00d9ff"/>'
-          )
-
-          # Moving scan line
-          svg.append(
-              '<rect class="scan" x="30" y="80" width="1140" height="3" fill="#00e5ff"/>'
-          )
-
-          # Footer
+          # Animated effects
           svg += [
+              '<rect class="scan" x="30" y="80" width="1140" height="3" fill="#00e5ff"/>',
 
-              '<text x="600" y="830" text-anchor="middle" fill="#00e5ff" font-family="monospace" font-size="25" letter-spacing="5">KAVEESITHUM // ASCII PROFILE</text>',
-
-              '<text x="600" y="860" text-anchor="middle" fill="#008EAA" font-family="monospace" font-size="14">DREAM • CODE • BUILD</text>',
+              '<text x="600" y="830" text-anchor="middle" fill="#00e5ff" font-family="monospace" font-size="25" letter-spacing="5">',
+              user.upper() + ' // ASCII PROFILE',
+              '</text>',
 
               '</svg>'
           ]
 
-          # Save SVG
           with open(
               "profile-ascii.svg",
               "w",
               encoding="utf-8"
           ) as f:
-
               f.write("\n".join(svg))
 
           print(f"Generated ASCII profile for @{user}")
-
           PY
 
       - name: Commit generated SVG
@@ -220,6 +166,6 @@ jobs:
 
           git add profile-ascii.svg
 
-          git commit -m "Update animated ASCII profile" || exit 0
+          git commit -m "Update ASCII profile" || exit 0
 
           git push
