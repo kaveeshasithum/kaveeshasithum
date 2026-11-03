@@ -121,3 +121,6 @@
 <img src="https://komarev.com/ghpvc/?username=kaveeshasithum&label=PROFILE+VIEWS&color=00D9FF&style=for-the-badge" alt="Profile Views"/>
 
 </div>
+          def ImageChops_multiply(a, b):
+              from PIL import ImageChops
+              return ImageChops.multiply(a, b)
