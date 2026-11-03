@@ -33,12 +33,12 @@ jobs:
           python - <<'PY'
           import os
           import requests
-          from PIL import Image, ImageDraw, ImageOps, ImageFilter
+          from PIL import Image, ImageDraw, ImageOps, ImageFilter, ImageChops
           from io import BytesIO
-          import math
 
-          user = os.environ["GH_USER"]
+          user = os.environ["GH_USER"].strip()
 
+          # Get GitHub avatar
           response = requests.get(
               f"https://api.github.com/users/{user}",
               headers={"User-Agent": "Profile-Photo-Generator"},
@@ -47,6 +47,7 @@ jobs:
           response.raise_for_status()
 
           avatar_url = response.json()["avatar_url"]
+
           avatar_response = requests.get(avatar_url, timeout=30)
           avatar_response.raise_for_status()
 
@@ -54,15 +55,16 @@ jobs:
               BytesIO(avatar_response.content)
           ).convert("RGB")
 
-          size = 420
+          # Resize original photo
           photo_size = 280
-          frames = []
+          size = 420
 
           photo = ImageOps.fit(
               photo,
               (photo_size, photo_size)
           )
 
+          # Circular photo mask
           mask = Image.new("L", (photo_size, photo_size), 0)
           ImageDraw.Draw(mask).ellipse(
               (0, 0, photo_size - 1, photo_size - 1),
@@ -74,9 +76,18 @@ jobs:
               (photo_size, photo_size),
               (0, 0, 0, 0)
           )
+
           photo_layer.paste(photo, (0, 0), mask)
 
+          # Function to combine scan line with circular mask
+          def ImageChops_multiply(a, b):
+              return ImageChops.multiply(a, b)
+
+          frames = []
+
+          # Generate animation frames
           for frame_no in range(32):
+
               canvas = Image.new(
                   "RGBA",
                   (size, 460),
@@ -85,78 +96,91 @@ jobs:
 
               draw = ImageDraw.Draw(canvas)
 
+              # Outer border
               draw.rounded_rectangle(
                   (8, 8, 412, 452),
                   radius=28,
-                  outline=(0, 217, 255, 180),
+                  outline=(0, 217, 255, 200),
                   width=3
               )
 
               # Original profile photo
-              canvas.paste(
+              canvas.alpha_composite(
                   photo_layer,
-                  (70, 70),
-                  photo_layer
+                  (70, 70)
               )
 
-              # Animated neon ring
-              ring = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+              # Neon glow ring
+              ring = Image.new(
+                  "RGBA",
+                  canvas.size,
+                  (0, 0, 0, 0)
+              )
+
               ring_draw = ImageDraw.Draw(ring)
 
-              start = frame_no * 11
+              start = frame_no * 12
 
               ring_draw.arc(
                   (55, 55, 365, 365),
                   start=start,
-                  end=start + 270,
+                  end=start + 280,
                   fill=(0, 225, 255, 255),
-                  width=7
+                  width=8
               )
 
-              ring = ring.filter(ImageFilter.GaussianBlur(5))
-              canvas = Image.alpha_composite(canvas, ring)
-
-              ring_sharp = Image.new(
-                  "RGBA", canvas.size, (0, 0, 0, 0)
+              glow = ring.filter(
+                  ImageFilter.GaussianBlur(7)
               )
-              ImageDraw.Draw(ring_sharp).arc(
-                  (55, 55, 365, 365),
-                  start=start,
-                  end=start + 270,
-                  fill=(0, 230, 255, 255),
-                  width=4
-              )
-              canvas = Image.alpha_composite(canvas, ring_sharp)
 
-              # Moving scan line clipped to the photo
-              scan_y = 70 + ((frame_no * 10) % photo_size)
+              canvas = Image.alpha_composite(
+                  canvas,
+                  glow
+              )
+
+              canvas = Image.alpha_composite(
+                  canvas,
+                  ring
+              )
+
+              # Moving scan line
+              scan_y = (frame_no * 10) % photo_size
 
               scan = Image.new(
                   "RGBA",
                   (photo_size, photo_size),
                   (0, 0, 0, 0)
               )
+
               scan_draw = ImageDraw.Draw(scan)
 
-              local_y = scan_y - 70
               scan_draw.rectangle(
-                  (0, local_y, photo_size, local_y + 3),
-                  fill=(0, 230, 255, 170)
+                  (0, scan_y, photo_size, scan_y + 4),
+                  fill=(0, 230, 255, 180)
               )
 
               scan.putalpha(
-                  ImageChops_multiply(scan.getchannel("A"), mask)
+                  ImageChops_multiply(
+                      scan.getchannel("A"),
+                      mask
+                  )
               )
 
-              canvas.alpha_composite(scan, (70, 70))
+              canvas.alpha_composite(
+                  scan,
+                  (70, 70)
+              )
 
+              # Profile username
               draw = ImageDraw.Draw(canvas)
+
               draw.text(
                   (210, 400),
                   user.upper(),
                   fill=(0, 220, 255, 255),
                   anchor="mm"
               )
+
               draw.text(
                   (210, 425),
                   "GITHUB DEVELOPER",
@@ -164,8 +188,9 @@ jobs:
                   anchor="mm"
               )
 
-              frames.append(canvas.convert("P", palette=Image.Palette.ADAPTIVE))
+              frames.append(canvas)
 
+          # Save animated GIF
           frames[0].save(
               "profile-photo.gif",
               save_all=True,
@@ -176,13 +201,15 @@ jobs:
           )
 
           print("Animated profile photo generated successfully!")
-
           PY
 
       - name: Commit generated GIF
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add profile-photo.gif
+
           git commit -m "Update animated profile photo" || exit 0
+
           git push
