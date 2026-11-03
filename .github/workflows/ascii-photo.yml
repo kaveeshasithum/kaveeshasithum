@@ -11,186 +11,122 @@ permissions:
   contents: write
 
 jobs:
-  generate:
+  generate-photo:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install pillow requests
+      - name: Install Pillow
+        run: pip install pillow
 
-      - name: Generate Animated Profile Photo
-        env:
-          GH_USER: ${{ github.repository_owner }}
+      - name: Generate animated profile photo
         run: |
-          python - <<'PY'
-          import os
-          import requests
-          from PIL import Image, ImageDraw, ImageOps, ImageFilter, ImageChops
-          from io import BytesIO
+          mkdir -p assets
 
-          user = os.environ["GH_USER"].strip()
+          cat > generate_photo.py <<'PY'
+          from PIL import Image, ImageDraw, ImageFilter
+          import math
 
-          # Get GitHub avatar
-          response = requests.get(
-              f"https://api.github.com/users/{user}",
-              headers={"User-Agent": "Profile-Photo-Generator"},
-              timeout=30
-          )
-          response.raise_for_status()
+          # GitHub profile avatar
+          avatar_url = "https://github.com/kaveesithum.png"
 
-          avatar_url = response.json()["avatar_url"]
+          import urllib.request
+          urllib.request.urlretrieve(avatar_url, "avatar.png")
 
-          avatar_response = requests.get(avatar_url, timeout=30)
-          avatar_response.raise_for_status()
+          photo = Image.open("avatar.png").convert("RGB")
 
-          photo = Image.open(
-              BytesIO(avatar_response.content)
-          ).convert("RGB")
-
-          # Resize original photo
-          photo_size = 280
           size = 420
+          photo_size = 280
 
-          photo = ImageOps.fit(
-              photo,
-              (photo_size, photo_size)
+          # Keep the full face visible without cropping
+          photo.thumbnail((250, 250))
+
+          background = Image.new(
+              "RGB",
+              (photo_size, photo_size),
+              (3, 12, 22)
           )
+
+          x = (photo_size - photo.width) // 2
+          y = (photo_size - photo.height) // 2
+
+          background.paste(photo, (x, y))
+          photo = background
 
           # Circular photo mask
           mask = Image.new("L", (photo_size, photo_size), 0)
-          ImageDraw.Draw(mask).ellipse(
+          mask_draw = ImageDraw.Draw(mask)
+          mask_draw.ellipse(
               (0, 0, photo_size - 1, photo_size - 1),
               fill=255
           )
 
-          photo_layer = Image.new(
-              "RGBA",
-              (photo_size, photo_size),
-              (0, 0, 0, 0)
-          )
-
-          photo_layer.paste(photo, (0, 0), mask)
-
-          # Function to combine scan line with circular mask
-          def ImageChops_multiply(a, b):
-              return ImageChops.multiply(a, b)
+          photo_layer = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+          photo_layer.paste(photo, (70, 70), mask)
 
           frames = []
 
-          # Generate animation frames
           for frame_no in range(32):
-
-              canvas = Image.new(
+              frame = Image.new(
                   "RGBA",
-                  (size, 460),
+                  (size, size),
                   (3, 12, 22, 255)
               )
 
-              draw = ImageDraw.Draw(canvas)
+              draw = ImageDraw.Draw(frame)
 
-              # Outer border
-              draw.rounded_rectangle(
-                  (8, 8, 412, 452),
-                  radius=28,
-                  outline=(0, 217, 255, 200),
+              # Animated neon ring
+              angle = frame_no * 360 / 32
+
+              draw.arc(
+                  (55, 55, 365, 365),
+                  start=angle,
+                  end=angle + 280,
+                  fill=(0, 240, 255, 255),
+                  width=5
+              )
+
+              draw.arc(
+                  (45, 45, 375, 375),
+                  start=angle + 180,
+                  end=angle + 300,
+                  fill=(0, 120, 255, 255),
                   width=3
               )
 
-              # Original profile photo
-              canvas.alpha_composite(
-                  photo_layer,
-                  (70, 70)
+              # Glow effect
+              glow = frame.filter(ImageFilter.GaussianBlur(12))
+
+              frame.alpha_composite(glow)
+              frame.alpha_composite(photo_layer)
+
+              draw = ImageDraw.Draw(frame)
+
+              # Scan line
+              scan_y = 80 + ((frame_no * 9) % 260)
+
+              draw.line(
+                  (75, scan_y, 345, scan_y),
+                  fill=(0, 255, 255, 100),
+                  width=2
               )
 
-              # Neon glow ring
-              ring = Image.new(
-                  "RGBA",
-                  canvas.size,
-                  (0, 0, 0, 0)
-              )
-
-              ring_draw = ImageDraw.Draw(ring)
-
-              start = frame_no * 12
-
-              ring_draw.arc(
-                  (55, 55, 365, 365),
-                  start=start,
-                  end=start + 280,
-                  fill=(0, 225, 255, 255),
-                  width=8
-              )
-
-              glow = ring.filter(
-                  ImageFilter.GaussianBlur(7)
-              )
-
-              canvas = Image.alpha_composite(
-                  canvas,
-                  glow
-              )
-
-              canvas = Image.alpha_composite(
-                  canvas,
-                  ring
-              )
-
-              # Moving scan line
-              scan_y = (frame_no * 10) % photo_size
-
-              scan = Image.new(
-                  "RGBA",
-                  (photo_size, photo_size),
-                  (0, 0, 0, 0)
-              )
-
-              scan_draw = ImageDraw.Draw(scan)
-
-              scan_draw.rectangle(
-                  (0, scan_y, photo_size, scan_y + 4),
-                  fill=(0, 230, 255, 180)
-              )
-
-              scan.putalpha(
-                  ImageChops_multiply(
-                      scan.getchannel("A"),
-                      mask
-                  )
-              )
-
-              canvas.alpha_composite(
-                  scan,
-                  (70, 70)
-              )
-
-              # Profile username
-              draw = ImageDraw.Draw(canvas)
-
+              # Bottom text
               draw.text(
-                  (210, 400),
-                  user.upper(),
-                  fill=(0, 220, 255, 255),
-                  anchor="mm"
+                  (145, 375),
+                  "KAVEESHA",
+                  fill=(0, 240, 255, 255)
               )
 
-              draw.text(
-                  (210, 425),
-                  "GITHUB DEVELOPER",
-                  fill=(130, 190, 210, 255),
-                  anchor="mm"
-              )
+              frames.append(frame.convert("P", palette=Image.Palette.ADAPTIVE))
 
-              frames.append(canvas)
-
-          # Save animated GIF
           frames[0].save(
               "profile-photo.gif",
               save_all=True,
@@ -200,16 +136,15 @@ jobs:
               optimize=False
           )
 
-          print("Animated profile photo generated successfully!")
+          print("Profile photo generated successfully!")
           PY
+
+          python generate_photo.py
 
       - name: Commit generated GIF
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add profile-photo.gif
-
-          git commit -m "Update animated profile photo" || exit 0
-
+          git commit -m "Update animated profile photo" || echo "No changes"
           git push
