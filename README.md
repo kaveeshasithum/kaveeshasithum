@@ -1,26 +1,22 @@
-
-<!-- ===================================== -->
-<!-- KAVEESHA SITHUM - GITHUB PROFILE README -->
-<!-- ===================================== -->
-
+ 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=HELLO+WORLD!;I'M+KAVEESHA+SITHUM;JAVA+DEVELOPER;SOFTWARE+DEVELOPMENT+ENTHUSIAST" alt="Typing SVG" />
+# 👋 HELLO, WORLD!
+
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=27&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=650&lines=I'm+Kaveesha+Sithum;Java+Developer;Software+Development+Enthusiast;Always+Learning+New+Things!" alt="Typing SVG" />
 
 <br/>
 
-<img src="./profile-photo.gif" width="220" alt="Animated Profile Photo"/>
+<img src="./profile-photo.gif" width="220" alt="My Animated Profile Photo" />
 
 <br/>
 
-<img src="./profile-ascii.svg" width="100%" alt="ASCII Cyberpunk Profile"/>
+<img src="./profile-ascii.svg" width="100%" alt="ASCII Cyberpunk Profile" />
 
 <br/>
 
-### `> SOFTWARE DEVELOPER | JAVA PROGRAMMER`
-
-<img src="https://img.shields.io/badge/STATUS-LEARNING%20AND%20BUILDING-00D9FF?style=for-the-badge&labelColor=02060B"/>
-<img src="https://img.shields.io/badge/FOCUS-SOFTWARE%20DEVELOPMENT-00D9FF?style=for-the-badge&labelColor=02060B"/>
+<img src="https://img.shields.io/badge/JAVA-DEVELOPER-00D9FF?style=for-the-badge&logo=openjdk&logoColor=white&labelColor=02060B" />
+<img src="https://img.shields.io/badge/STATUS-LEARNING-00D9FF?style=for-the-badge&labelColor=02060B" />
 
 </div>
 
@@ -33,6 +29,7 @@ public class Kaveesha {
 
     String name = "Kaveesha Sithum Nimsara Weththasinhe";
     int age = 21;
+
     String school = "Seethawaka Central College";
     String institute = "ICET";
 
@@ -45,7 +42,7 @@ public class Kaveesha {
         "SQL"
     };
 
-    String goal = "Become a Professional Software Developer";
+    String goal = "Professional Software Developer";
 
     public void introduce() {
         System.out.println("Hello World!");
@@ -54,25 +51,53 @@ public class Kaveesha {
 }
 ```
 
-- 🎓 Studying at **ICET**
+- 🎓 Studying at ICET
 - 💻 Interested in Software Development
-- ☕ Learning and developing with Java
-- 🚀 Building my programming skills
-- 🎯 Goal: Become a Professional Software Developer
+- ☕ Learning Java Programming
+- 🌱 Improving my programming skills every day
+- 🚀 Building projects and learning new technologies
+- 🎯 My goal is to become a Professional Software Developer
 
 ---
 
-## 🛠️ My Skills
-
-<div align="center">
+## 🛠️ Technical Skills
 
 ### Programming Languages
 
-<img src="https://skillicons.dev/icons?i=java,html,css,js,sql&theme=dark" />
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=java,html,css,js,mysql&theme=dark" />
+
+</div>
 
 ### Tools & Technologies
 
-<img src="https://skillicons.dev/icons?i=git,github,vscode,idea,mysql&theme=dark" />
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=git,github,vscode,idea&theme=dark" />
+
+</div>
+
+---
+
+## 💻 What I'm Working On
+
+- Learning Java programming
+- Practicing problem solving
+- Improving HTML and CSS skills
+- Learning JavaScript
+- Working with SQL databases
+- Developing personal projects
+
+---
+
+## 🚀 My Projects
+
+<div align="center">
+
+<a href="https://github.com/kaveesithum?tab=repositories">
+<img src="https://img.shields.io/badge/VIEW%20ALL%20PROJECTS-00D9FF?style=for-the-badge&logo=github&logoColor=black" />
+</a>
 
 </div>
 
@@ -82,9 +107,9 @@ public class Kaveesha {
 
 <div align="center">
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api?username=kaveesithum&show_icons=true&theme=tokyonight&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=02060B" />
+<img height="180" src="https://github-readme-stats.vercel.app/api?username=kaveesithum&show_icons=true&theme=tokyonight&hide_border=true&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF&bg_color=02060B" />
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveesithum&layout=compact&theme=tokyonight&hide_border=true&title_color=00D9FF&text_color=FFFFFF&bg_color=02060B" />
+<img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveesithum&layout=compact&theme=tokyonight&hide_border=true&title_color=00D9FF&text_color=FFFFFF&bg_color=02060B" />
 
 <br/>
 
@@ -98,19 +123,7 @@ public class Kaveesha {
 
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/kaveesithum/kaveesithum/output/github-contribution-grid-snake-dark.svg" width="100%" alt="Contribution Snake"/>
-
-</div>
-
----
-
-## 🚀 My Projects
-
-<div align="center">
-
-<a href="https://github.com/kaveesithum?tab=repositories">
-  <img src="https://img.shields.io/badge/Explore-My%20Repositories-00D9FF?style=for-the-badge&logo=github&logoColor=black"/>
-</a>
+<img src="https://raw.githubusercontent.com/kaveesithum/kaveesithum/output/github-contribution-grid-snake-dark.svg" width="100%" alt="GitHub Contribution Snake" />
 
 </div>
 
@@ -120,8 +133,8 @@ public class Kaveesha {
 
 | Institution | Details |
 |---|---|
-| School | Seethawaka Central College |
-| Institute | ICET |
+| 🏫 School | Seethawaka Central College |
+| 🎓 Institute | ICET |
 
 ---
 
@@ -129,16 +142,16 @@ public class Kaveesha {
 
 <div align="center">
 
-<a href="mailto:kaveesithum200604@gmail.com">
-  <img src="https://img.shields.io/badge/Email-00D9FF?style=for-the-badge&logo=gmail&logoColor=black"/>
+<a href="https://github.com/kaveesithum">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
 </a>
 
-<a href="https://github.com/kaveesithum">
-  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white"/>
+<a href="mailto:kaveesithum200604@gmail.com">
+<img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
 </a>
 
 <a href="https://www.linkedin.com/in/kaveesha-sithum-nimsara-weththasinhe-83aa96414/">
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"/>
+<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
 </a>
 
 </div>
@@ -147,12 +160,14 @@ public class Kaveesha {
 
 <div align="center">
 
-### ⚡ "CODE. CREATE. INNOVATE. REPEAT."
+## ⚡ CODE. CREATE. INNOVATE. REPEAT.
 
 <img src="https://komarev.com/ghpvc/?username=kaveesithum&label=PROFILE%20VIEWS&color=00D9FF&style=for-the-badge" />
 
 <br/><br/>
 
-**Thanks for visiting my profile! 💙**
+### 💙 THANK YOU FOR VISITING MY PROFILE!
+
+**Keep Learning • Keep Building • Keep Growing**
 
 </div>
