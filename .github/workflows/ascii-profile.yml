@@ -29,6 +29,7 @@ jobs:
       - name: Generate ASCII Profile
         env:
           GH_USER: ${{ github.repository_owner }}
+
         run: |
 
           python - <<'PY'
@@ -40,13 +41,21 @@ jobs:
           from io import BytesIO
           from html import escape
 
+          # =====================================
+          # GITHUB USERNAME
+          # =====================================
+
           user = os.environ["GH_USER"].strip()
 
-          # Get GitHub Avatar
+          # =====================================
+          # DOWNLOAD PROFILE PHOTO
+          # =====================================
 
           response = requests.get(
               f"https://api.github.com/users/{user}",
-              headers={"User-Agent": "GitHub-ASCII-Profile"},
+              headers={
+                  "User-Agent": "GitHub-ASCII-Profile"
+              },
               timeout=30
           )
 
@@ -61,19 +70,39 @@ jobs:
 
           avatar_response.raise_for_status()
 
-          # Process Image
+          # =====================================
+          # IMAGE PROCESSING
+          # =====================================
 
           image = Image.open(
               BytesIO(avatar_response.content)
           ).convert("RGB")
 
-          image = ImageOps.fit(image, (100, 48))
+          # Large ASCII Resolution
 
-          image = ImageEnhance.Contrast(image).enhance(1.5)
+          columns = 150
+          rows = 60
+
+          image = ImageOps.fit(
+              image,
+              (columns, rows),
+              method=Image.Resampling.LANCZOS,
+              centering=(0.5, 0.5)
+          )
+
+          image = ImageEnhance.Contrast(
+              image
+          ).enhance(1.6)
+
+          image = ImageEnhance.Sharpness(
+              image
+          ).enhance(1.5)
 
           gray = image.convert("L")
 
-          # ASCII Characters
+          # =====================================
+          # ASCII CHARACTERS
+          # =====================================
 
           chars = "@%#*+=-:. "
 
@@ -85,7 +114,9 @@ jobs:
               "#00D9FF"
           ]
 
-          # SVG Settings
+          # =====================================
+          # SVG START
+          # =====================================
 
           svg = [
 
@@ -93,12 +124,17 @@ jobs:
 
               '<defs>',
 
+              # Background Gradient
+
               '<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">',
               '<stop offset="0%" stop-color="#02060b"/>',
+              '<stop offset="50%" stop-color="#001522"/>',
               '<stop offset="100%" stop-color="#071927"/>',
               '</linearGradient>',
 
-              '<filter id="glow">',
+              # Neon Glow
+
+              '<filter id="glow" x="-30%" y="-30%" width="160%" height="160%">',
               '<feGaussianBlur stdDeviation="2.5" result="blur"/>',
               '<feMerge>',
               '<feMergeNode in="blur"/>',
@@ -106,58 +142,113 @@ jobs:
               '</feMerge>',
               '</filter>',
 
+              # Animations
+
               '<style>',
 
-              '.matrix{font-family:monospace;font-size:13px;fill:#00d9ff;opacity:.15}',
+              '.ascii {',
+              'font-family: monospace;',
+              'font-size: 11px;',
+              'letter-spacing: 0px;',
+              'filter: url(#glow);',
+              '}',
 
-              '.ascii{font-family:monospace;font-size:10px;letter-spacing:0px;filter:url(#glow)}',
+              '.pulse {',
+              'animation: pulse 2.5s ease-in-out infinite alternate;',
+              '}',
 
-              '.pulse{animation:pulse 2.4s ease-in-out infinite alternate}',
+              '@keyframes pulse {',
+              'from { opacity: 0.65; }',
+              'to { opacity: 1; }',
+              '}',
 
-              '@keyframes pulse{from{opacity:.65}to{opacity:1}}',
+              '.scan {',
+              'animation: scan 5s linear infinite;',
+              'opacity: 0.35;',
+              '}',
 
-              '.scan{animation:scan 5s linear infinite;opacity:.3}',
+              '@keyframes scan {',
+              '0% { transform: translateY(-850px); }',
+              '100% { transform: translateY(900px); }',
+              '}',
 
-              '@keyframes scan{0%{transform:translateY(-800px)}100%{transform:translateY(900px)}}',
+              '.glitch {',
+              'animation: glitch 4s infinite;',
+              '}',
 
-              '.glitch{animation:glitch 3s infinite}',
+              '@keyframes glitch {',
+              '0%, 90%, 100% { transform: translateX(0); }',
+              '92% { transform: translateX(3px); }',
+              '94% { transform: translateX(-3px); }',
+              '}',
 
-              '@keyframes glitch{0%,90%,100%{transform:translateX(0)}92%{transform:translateX(3px)}94%{transform:translateX(-3px)}}',
+              '.border {',
+              'animation: borderPulse 3s ease-in-out infinite alternate;',
+              '}',
+
+              '@keyframes borderPulse {',
+              'from { opacity: 0.45; }',
+              'to { opacity: 1; }',
+              '}',
+
+              '.matrix {',
+              'font-family: monospace;',
+              'font-size: 13px;',
+              'fill: #00D9FF;',
+              'opacity: 0.12;',
+              '}',
 
               '</style>',
 
               '</defs>',
 
-              # Background
+              # =================================
+              # BACKGROUND
+              # =================================
 
               '<rect width="1200" height="900" fill="url(#bg)"/>',
 
-              # Border
+              # =================================
+              # OUTER BORDER
+              # =================================
 
-              '<rect x="22" y="22" width="1156" height="856" rx="24" fill="none" stroke="#00d9ff" stroke-width="2" opacity=".65"/>'
+              '<rect x="22" y="22" width="1156" height="856" rx="24" fill="none" stroke="#00D9FF" stroke-width="2" opacity="0.35"/>',
+
+              '<rect class="border" x="40" y="40" width="1120" height="820" rx="22" fill="none" stroke="#00D9FF" stroke-width="2"/>'
 
           ]
 
-          # Matrix Background
+          # =====================================
+          # MATRIX BACKGROUND
+          # =====================================
 
           for x in range(30, 1180, 35):
 
-              text = "".join(
-                  chars[(x + i * 7) % len(chars)]
-                  for i in range(42)
-              )
+              for y in range(65, 850, 55):
 
-              svg.append(
-                  f'<text class="matrix" x="{x}" y="50">{escape(text)}</text>'
-              )
+                  text = "".join(
+                      chars[(x + y + i * 7) % len(chars)]
+                      for i in range(12)
+                  )
 
-          # ASCII Portrait
+                  svg.append(
+                      f'<text class="matrix" x="{x}" y="{y}">{escape(text)}</text>'
+                  )
 
-          for y in range(48):
+          # =====================================
+          # ASCII PROFILE PORTRAIT
+          # =====================================
+
+          start_x = 105
+          start_y = 145
+
+          line_height = 11
+
+          for y in range(rows):
 
               spans = []
 
-              for x in range(100):
+              for x in range(columns):
 
                   brightness = gray.getpixel((x, y))
 
@@ -165,37 +256,71 @@ jobs:
                       brightness * (len(chars) - 1) / 255
                   )
 
-                  color = palette[min(idx // 2, 4)]
+                  color = palette[
+                      min(idx // 2, len(palette) - 1)
+                  ]
+
+                  character = escape(chars[idx])
 
                   spans.append(
-                      f'<tspan fill="{color}">{escape(chars[idx])}</tspan>'
+                      f'<tspan fill="{color}">{character}</tspan>'
                   )
 
               svg.append(
 
-                  f'<text class="ascii pulse glitch" xml:space="preserve" x="300" y="{150 + y*13}">'
+                  f'<text class="ascii pulse glitch" '
+                  f'xml:space="preserve" '
+                  f'x="{start_x}" '
+                  f'y="{start_y + y * line_height}">'
                   + "".join(spans)
                   + '</text>'
 
               )
 
-          # Animation Effects
+          # =====================================
+          # ANIMATED SCAN LINE
+          # =====================================
 
-          svg += [
+          svg.append(
 
-              '<rect class="scan" x="30" y="80" width="1140" height="3" fill="#00e5ff"/>',
+              '<rect class="scan" '
+              'x="42" y="80" '
+              'width="1116" height="3" '
+              'fill="#00E5FF"/>'
 
-              '<text x="600" y="850" text-anchor="middle" fill="#00e5ff" font-family="monospace" font-size="25" letter-spacing="5" filter="url(#glow)">',
+          )
 
-              escape(user.upper()) + ' // ASCII PROFILE',
+          # =====================================
+          # BOTTOM USERNAME
+          # =====================================
 
-              '</text>',
+          svg.append(
 
-              '</svg>'
+              '<text x="600" y="835" '
+              'text-anchor="middle" '
+              'fill="#00D9FF" '
+              'font-family="monospace" '
+              'font-size="25" '
+              'font-weight="bold" '
+              'letter-spacing="4" '
+              'filter="url(#glow)">'
 
-          ]
+              + escape(user.upper())
+              + ' // ASCII PROFILE'
 
-          # Save SVG
+              + '</text>'
+
+          )
+
+          # =====================================
+          # SVG END
+          # =====================================
+
+          svg.append('</svg>')
+
+          # =====================================
+          # SAVE SVG FILE
+          # =====================================
 
           with open(
               "profile-ascii.svg",
@@ -205,9 +330,17 @@ jobs:
 
               f.write("\n".join(svg))
 
-          print(f"Generated ASCII profile for @{user}")
+          print("=================================")
+          print("ASCII PROFILE GENERATED!")
+          print("Username:", user)
+          print("Resolution:", columns, "x", rows)
+          print("=================================")
 
           PY
+
+      # =====================================
+      # COMMIT GENERATED SVG
+      # =====================================
 
       - name: Commit generated SVG
         run: |
@@ -218,6 +351,6 @@ jobs:
 
           git add profile-ascii.svg
 
-          git commit -m "Update ASCII profile" || exit 0
+          git commit -m "Update animated ASCII profile" || exit 0
 
           git push
