@@ -71,9 +71,9 @@ Goal: Become a Professional Software Developer
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api?username=kaveeshasithum&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00E5FF&icon_color=00E5FF&text_color=FFFFFF" width="49%" />
+<img src="./profile/stats.svg" width="49%">
 
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveeshasithum&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00E5FF&text_color=FFFFFF" width="41%" />
+<img src="./profile/top-langs.svg" width="41%">
 
 </div>
 
