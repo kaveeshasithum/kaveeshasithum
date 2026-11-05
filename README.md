@@ -65,13 +65,15 @@ Goal: Become a Professional Software Developer
 
 ---
 
-## 📊 GITHUB STATISTICS
+<!-- ============ GITHUB STATISTICS ============ -->
+
+<h2 align="center">📊 GITHUB STATISTICS</h2>
 
 <div align="center">
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api?username=kaveeshasithum&show_icons=true&hide_border=true&bg_color=020812&title_color=00D9FF&icon_color=00D9FF&text_color=FFFFFF"/>
+<img src="https://github-readme-stats.vercel.app/api?username=kaveeshasithum&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00E5FF&icon_color=00E5FF&text_color=FFFFFF" width="49%" />
 
-<img width="49%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveeshasithum&layout=compact&hide_border=true&bg_color=020812&title_color=00D9FF&text_color=FFFFFF"/>
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=kaveeshasithum&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00E5FF&text_color=FFFFFF" width="41%" />
 
 </div>
 
