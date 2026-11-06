@@ -2,7 +2,7 @@
 
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:020812,50:003B55,100:00D9FF&height=200&section=header&text=KAVEESHA%20SITHUM&fontSize=45&fontColor=00E5FF&animation=fadeIn&fontAlignY=38&desc=Dream%20%E2%80%A2%20Code%20%E2%80%A2%20Build&descAlignY=60&descSize=18"/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=ASPIRING+SOFTWARE+DEVELOPER;JAVA+PROGRAMMER;WEB+DEVELOPMENT+LEARNER;DREAM+%E2%80%A2+CODE+%E2%80%A2+BUILD"/>
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=24&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=JAVA+PROGRAMMER;WEB+DEVELOPMENT+LEARNER;DREAM+%E2%80%A2+CODE+%E2%80%A2+BUILD"/>
 
 <br>
 
